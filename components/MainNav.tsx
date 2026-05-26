@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { Search, MapPin, Phone, Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function MainNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -16,19 +17,16 @@ export default function MainNav() {
       <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="w-8 h-8 bg-[#1E5631] rounded-lg flex items-center justify-center">
-              <span className="text-white font-black text-sm tracking-tighter">M</span>
-            </div>
-            <div className="leading-none">
-              <span className="text-[#1E5631] font-black text-base tracking-tight block">
-                MERCAHORRO
-              </span>
-              <span className="text-[#FF6B35] font-semibold text-[9px] tracking-[0.15em] uppercase">
-                Abastos
-              </span>
-            </div>
-          </div>
+          <a href="/" className="shrink-0">
+            <Image
+              src="/logo-mercahorro.png"
+              alt="MercAhorro Abastos"
+              width={160}
+              height={56}
+              priority
+              className="h-11 w-auto object-contain"
+            />
+          </a>
 
           {/* Search bar — desktop */}
           <div className="hidden md:flex flex-1 max-w-lg items-center gap-2 bg-[#F4F5F7] rounded-xl px-4 h-10 border border-transparent focus-within:border-[#1E5631] focus-within:bg-white transition-all">

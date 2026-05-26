@@ -8,7 +8,6 @@ import Link from "next/link";
 const ECOSYSTEM_LINKS = [
   { label: "Merca Capital", href: "https://mercacapital.mx" },
   { label: "Grupo Mercahorro", href: "https://grupomercahorro.mx" },
-  { label: "Altavela Group", href: "https://altavelagroup.com" },
   { label: "Mercahorro Abastos", href: "/", active: true },
 ];
 
