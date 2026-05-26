@@ -15,21 +15,21 @@ export default function MainNav() {
     <>
       {/* ── Sticky Navbar ─────────────────────────────── */}
       <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <a href="/" className="shrink-0">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between gap-6">
+          {/* Logo — espectacular */}
+          <a href="/" className="shrink-0 flex items-center">
             <Image
               src="/logo-mercahorro.png"
               alt="MercAhorro Abastos"
-              width={160}
-              height={56}
+              width={220}
+              height={80}
               priority
-              className="h-11 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           </a>
 
           {/* Search bar — desktop */}
-          <div className="hidden md:flex flex-1 max-w-lg items-center gap-2 bg-[#F4F5F7] rounded-xl px-4 h-10 border border-transparent focus-within:border-[#1E5631] focus-within:bg-white transition-all">
+          <div className="hidden md:flex flex-1 max-w-xl items-center gap-2 bg-[#F4F5F7] rounded-xl px-4 h-11 border border-transparent focus-within:border-[#1E5631] focus-within:bg-white transition-all">
             <Search size={16} className="text-gray-400 shrink-0" />
             <input
               type="text"
@@ -41,21 +41,21 @@ export default function MainNav() {
           </div>
 
           {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
-            <button className="flex items-center gap-1.5 text-sm font-medium text-[#2B2D42] hover:text-[#1E5631] transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <button className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors">
               <MapPin size={15} />
               Sucursales
             </button>
             <a
               href="tel:+526861234567"
-              className="flex items-center gap-1.5 text-sm font-medium text-[#2B2D42] hover:text-[#1E5631] transition-colors"
+              className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors"
             >
               <Phone size={15} />
               Contacto
             </a>
             <a
               href="#cotiza"
-              className="bg-[#FF6B35] hover:bg-[#e55c27] text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors"
+              className="bg-[#FF6B35] hover:bg-[#e55c27] text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all hover:scale-105 shadow-md shadow-orange-200"
             >
               Cotiza tu Local
             </a>
