@@ -80,10 +80,10 @@ function RecipeCard({ recipe }: { recipe: RecetaSanity }) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
       {/* Hero */}
-      <div className="h-44 bg-gradient-to-br from-[#FF6B35]/10 to-amber-50 flex items-center justify-center">
+      <div className="h-44 bg-gradient-to-br from-[#FF6B35]/10 to-amber-50 overflow-hidden flex items-center justify-center">
         {recipe.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" />
+          <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover object-top" />
         ) : (
           <ChefHat size={48} className="text-[#FF6B35]/30" />
         )}
