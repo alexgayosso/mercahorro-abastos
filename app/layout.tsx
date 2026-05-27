@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     "mayoreo",
     "infraestructura comercial",
   ],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Mercahorro Abastos",
     description: "La nueva era del abasto. Precios directos. Infraestructura de primer mundo.",
