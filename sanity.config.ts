@@ -1,7 +1,3 @@
-// ============================================================
-// sanity.config.ts — Configuración del Sanity Studio
-// Va en la RAÍZ del proyecto (junto a package.json)
-// ============================================================
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
@@ -29,9 +25,12 @@ export default defineConfig({
             S.listItem()
               .title("📅 Eventos")
               .child(S.documentTypeList("evento").title("Eventos")),
+            S.listItem()
+              .title("🍽️ Recetas")
+              .child(S.documentTypeList("receta").title("Recetas")),
           ]),
     }),
-    visionTool(), // permite probar queries GROQ en el studio
+    visionTool(),
   ],
 
   schema: {

@@ -1,8 +1,6 @@
-// ============================================================
-// sanity/schemas/index.ts — Exporta todos los schemas
-// ============================================================
 import mercado from "./mercado";
 import locatario from "./locatario";
 import evento from "./evento";
+import receta from "./receta";
 
-export const schemaTypes = [mercado, locatario, evento];
+export const schemaTypes = [mercado, locatario, evento, receta];
