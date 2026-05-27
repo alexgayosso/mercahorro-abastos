@@ -4,7 +4,7 @@
 // ============================================================
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Leaf, Beef, Fish, ShoppingBag, UtensilsCrossed,
   Sparkles, Hammer, Shirt, HeartPulse, Laptop,
@@ -133,6 +133,17 @@ function LocatarioCard({ loc }: { loc: LocatarioSanity }) {
 export default function Directory({ locatarios }: { locatarios: LocatarioSanity[] }) {
   const [activeFilter, setActiveFilter] = useState<FilterButton | null>(null);
   const [search, setSearch] = useState("");
+
+  // Escucha el buscador del navbar
+  useEffect(() => {
+    function onNavSearch(e: Event) {
+      const value = (e as CustomEvent<string>).detail;
+      setSearch(value);
+      setActiveFilter(null);
+    }
+    window.addEventListener("mercahorro:search", onNavSearch);
+    return () => window.removeEventListener("mercahorro:search", onNavSearch);
+  }, []);
 
   const filtered = useMemo(() => {
     let results = [...locatarios];

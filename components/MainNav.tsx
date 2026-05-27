@@ -11,6 +11,24 @@ export default function MainNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState("");
 
+  function handleSearch(value: string) {
+    setQuery(value);
+    // Dispara evento global que Directory.tsx escucha
+    window.dispatchEvent(new CustomEvent("mercahorro:search", { detail: value }));
+    // Scroll suave al directorio
+    if (value.length > 0) {
+      const dir = document.getElementById("directorio");
+      if (dir) dir.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      const dir = document.getElementById("directorio");
+      if (dir) dir.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   return (
     <>
       {/* ── Sticky Navbar ─────────────────────────────── */}
@@ -34,10 +52,14 @@ export default function MainNav() {
             <input
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="¿Qué buscas hoy? Carnicería, aguacate, abarrotes…"
               className="bg-transparent flex-1 text-sm text-[#2B2D42] placeholder-gray-400 outline-none"
             />
+            {query && (
+              <button onClick={() => handleSearch("")} className="text-gray-400 hover:text-gray-600 text-lg leading-none">×</button>
+            )}
           </div>
 
           {/* Desktop CTAs */}
