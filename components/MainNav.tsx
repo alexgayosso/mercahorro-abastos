@@ -47,7 +47,9 @@ export default function MainNav() {
               Sucursales
             </button>
             <a
-              href="tel:+526861234567"
+              href="https://wa.me/528120008031"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors"
             >
               <Phone size={15} />

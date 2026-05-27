@@ -6,9 +6,9 @@
 import Link from "next/link";
 
 const ECOSYSTEM_LINKS = [
-  { label: "Merca Capital", href: "https://mercacapital.mx" },
-  { label: "Grupo Mercahorro", href: "https://grupomercahorro.mx" },
-  { label: "Mercahorro Abastos", href: "/", active: true },
+  { label: "Merca Capital", href: "https://mercacapital.com" },
+  { label: "Grupo Mercahorro", href: "https://grupomercahorro.com" },
+  { label: "Mercahorro Abastos", href: "https://mercahorro.com.mx", active: true },
 ];
 
 export default function EcosystemHeader() {
