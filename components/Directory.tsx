@@ -139,7 +139,7 @@ export default function Directory({ locatarios }: { locatarios: LocatarioSanity[
 
     if (activeFilter) {
       const allowedCats = FILTER_TO_CATEGORIES[activeFilter];
-      results = results.filter((l) => allowedCats.includes(l.category));
+      results = results.filter((l) => allowedCats.includes(l.category as any));
     }
 
     if (search.trim()) {
