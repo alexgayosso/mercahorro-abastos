@@ -1,24 +1,35 @@
 // ============================================================
-// app/page.tsx — Landing Page (mercahorro.com.mx)
+// app/page.tsx — Server Component: fetch desde Sanity
 // ============================================================
 import MainNav from "@/components/MainNav";
 import Directory from "@/components/Directory";
 import CommunitySection from "@/components/CommunitySection";
 import B2BSection from "@/components/B2BSection";
+import { getLocatarios } from "@/lib/sanity.queries";
 
-export default function Home() {
+export const revalidate = 60; // refresca datos cada 60 segundos
+
+export default async function Home() {
+  // Fetch desde Sanity — si falla, usa array vacío para no romper la web
+  let locatarios = [];
+  try {
+    locatarios = await getLocatarios();
+  } catch (error) {
+    console.error("Error fetching locatarios from Sanity:", error);
+  }
+
   return (
     <main className="bg-[#F4F5F7]">
       {/* 1. Navbar + Hero */}
       <MainNav />
 
-      {/* 2. Directorio Dinámico de Locatarios */}
-      <Directory />
+      {/* 2. Directorio — recibe datos reales de Sanity */}
+      <Directory locatarios={locatarios} />
 
-      {/* 3. Comunidad: Eventos + Recetas con Cross-Selling */}
+      {/* 3. Comunidad */}
       <CommunitySection />
 
-      {/* 4. B2B CTA Institucional */}
+      {/* 4. B2B CTA */}
       <B2BSection />
 
       {/* Footer */}

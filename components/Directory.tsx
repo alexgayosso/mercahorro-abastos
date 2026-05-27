@@ -1,50 +1,54 @@
 // ============================================================
 // Directory.tsx — Directorio Dinámico de Locatarios
-// The heart of Mercahorro: 12 filter buttons + merchant cards
+// Ahora recibe datos de Sanity como props (server → client)
 // ============================================================
 "use client";
 
 import { useState, useMemo } from "react";
 import {
-  Leaf,
-  Beef,
-  Fish,
-  ShoppingBag,
-  UtensilsCrossed,
-  Sparkles,
-  Hammer,
-  Shirt,
-  HeartPulse,
-  Laptop,
-  Package,
-  Wrench,
-  MessageCircle,
-  Link,
-  Globe,
-  Search,
+  Leaf, Beef, Fish, ShoppingBag, UtensilsCrossed,
+  Sparkles, Hammer, Shirt, HeartPulse, Laptop,
+  Package, Wrench, MessageCircle, Search,
 } from "lucide-react";
-import { LOCATARIOS } from "@/lib/data";
 import { FILTER_TO_CATEGORIES } from "@/types";
-import type { FilterButton, Locatario } from "@/types";
+import type { FilterButton } from "@/types";
+
+// ── Tipo de Locatario (viene de Sanity) ─────────────────────
+export interface LocatarioSanity {
+  _id: string;
+  localNumber: string;
+  businessName: string;
+  ownerName?: string;
+  category: string;
+  description?: string;
+  imageUrl?: string;
+  social?: {
+    whatsapp?: string;
+    instagram?: string;
+    facebook?: string;
+  };
+  featured?: boolean;
+  marketCity?: string;
+}
 
 // ── Filter Button Config ────────────────────────────────────
 const FILTER_BUTTONS: { label: FilterButton; icon: React.FC<{ size?: number; className?: string }> }[] = [
-  { label: "Frescos",     icon: Leaf },
-  { label: "Carnes",      icon: Beef },
-  { label: "Mariscos",    icon: Fish },
-  { label: "Abarrotes",   icon: ShoppingBag },
-  { label: "Comida",      icon: UtensilsCrossed },
-  { label: "Limpieza",    icon: Sparkles },
-  { label: "Hogar",       icon: Hammer },
-  { label: "Ropa",        icon: Shirt },
-  { label: "Salud",       icon: HeartPulse },
-  { label: "Tecnología",  icon: Laptop },
-  { label: "Mayoreo",     icon: Package },
-  { label: "Servicios",   icon: Wrench },
+  { label: "Frescos",    icon: Leaf },
+  { label: "Carnes",     icon: Beef },
+  { label: "Mariscos",   icon: Fish },
+  { label: "Abarrotes",  icon: ShoppingBag },
+  { label: "Comida",     icon: UtensilsCrossed },
+  { label: "Limpieza",   icon: Sparkles },
+  { label: "Hogar",      icon: Hammer },
+  { label: "Ropa",       icon: Shirt },
+  { label: "Salud",      icon: HeartPulse },
+  { label: "Tecnología", icon: Laptop },
+  { label: "Mayoreo",    icon: Package },
+  { label: "Servicios",  icon: Wrench },
 ];
 
 // ── Locatario Card ──────────────────────────────────────────
-function LocatarioCard({ loc }: { loc: Locatario }) {
+function LocatarioCard({ loc }: { loc: LocatarioSanity }) {
   return (
     <article className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 hover:-translate-y-1 flex flex-col">
       {/* Image / Color Block */}
@@ -61,13 +65,11 @@ function LocatarioCard({ loc }: { loc: Locatario }) {
             {loc.businessName.charAt(0)}
           </div>
         )}
-
-        {/* Local number badge — industrial stamp style */}
+        {/* Local number badge */}
         <div className="absolute top-3 left-3 bg-[#1E5631] text-white px-2.5 py-1 rounded-lg">
           <span className="font-black text-xs tracking-widest uppercase">Local</span>
           <div className="font-black text-lg leading-none tracking-tight">{loc.localNumber}</div>
         </div>
-
         {/* Featured ribbon */}
         {loc.featured && (
           <div className="absolute top-3 right-3 bg-[#FF6B35] text-white text-[9px] font-bold tracking-widest uppercase px-2 py-1 rounded-md">
@@ -78,11 +80,9 @@ function LocatarioCard({ loc }: { loc: Locatario }) {
 
       {/* Body */}
       <div className="p-4 flex flex-col flex-1">
-        {/* Category pill */}
         <span className="text-[10px] text-[#1E5631] font-semibold tracking-widest uppercase bg-[#1E5631]/8 px-2 py-0.5 rounded-md self-start mb-2">
           {loc.category}
         </span>
-
         <h3 className="font-black text-[#2B2D42] text-base leading-tight mb-1">
           {loc.businessName}
         </h3>
@@ -90,49 +90,37 @@ function LocatarioCard({ loc }: { loc: Locatario }) {
           {loc.description}
         </p>
 
-        {/* Social action buttons */}
+        {/* Social buttons */}
         <div className="flex items-center gap-2 mt-auto">
-          {loc.social.whatsapp && (
+          {loc.social?.whatsapp && (
             <a
               href={`https://wa.me/52${loc.social.whatsapp}?text=Hola, vi tu local ${loc.localNumber} en Mercahorro y me interesa.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="WhatsApp"
+              target="_blank" rel="noopener noreferrer" title="WhatsApp"
               className="w-9 h-9 rounded-full bg-[#25D366] hover:bg-[#1ebe59] flex items-center justify-center transition-colors shadow-sm"
             >
               <MessageCircle size={16} className="text-white" />
             </a>
           )}
-          {loc.social.instagram && (
+          {loc.social?.instagram && (
             <a
               href={`https://instagram.com/${loc.social.instagram}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Instagram"
+              target="_blank" rel="noopener noreferrer" title="Instagram"
               className="w-9 h-9 rounded-full bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 flex items-center justify-center transition-opacity shadow-sm"
             >
-              <Link size={16} className="text-white" />
+              <span className="text-white font-black text-xs">IG</span>
             </a>
           )}
-          {loc.social.facebook && (
+          {loc.social?.facebook && (
             <a
               href={`https://facebook.com/${loc.social.facebook}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Facebook"
+              target="_blank" rel="noopener noreferrer" title="Facebook"
               className="w-9 h-9 rounded-full bg-[#1877F2] hover:bg-[#166fe5] flex items-center justify-center transition-colors shadow-sm"
             >
-              <Globe size={16} className="text-white" />
+              <span className="text-white font-black text-sm">f</span>
             </a>
           )}
-
-          {/* Spacer + market badge */}
           <span className="ml-auto text-[10px] text-gray-400 font-medium bg-gray-50 px-2 py-1 rounded-md">
-            {loc.marketId === "mh-torreon"
-              ? "Torreón"
-              : loc.marketId === "mh-gomez"
-              ? "Gómez Palacio"
-              : "Monterrey"}
+            {loc.marketCity || "Mercahorro"}
           </span>
         </div>
       </div>
@@ -141,12 +129,13 @@ function LocatarioCard({ loc }: { loc: Locatario }) {
 }
 
 // ── Main Directory Component ─────────────────────────────────
-export default function Directory() {
+// Recibe locatarios como prop desde el Server Component (page.tsx)
+export default function Directory({ locatarios }: { locatarios: LocatarioSanity[] }) {
   const [activeFilter, setActiveFilter] = useState<FilterButton | null>(null);
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
-    let results = LOCATARIOS.filter((l) => l.active);
+    let results = [...locatarios];
 
     if (activeFilter) {
       const allowedCats = FILTER_TO_CATEGORIES[activeFilter];
@@ -164,7 +153,7 @@ export default function Directory() {
     }
 
     return results;
-  }, [activeFilter, search]);
+  }, [activeFilter, search, locatarios]);
 
   return (
     <section id="directorio" className="bg-[#F4F5F7] py-14">
@@ -180,7 +169,6 @@ export default function Directory() {
               Encuentra tu proveedor ideal
             </h2>
           </div>
-          {/* Inline search */}
           <div className="flex items-center gap-2 bg-white rounded-xl px-4 h-10 border border-gray-200 focus-within:border-[#1E5631] transition-colors w-full sm:w-72">
             <Search size={15} className="text-gray-400 shrink-0" />
             <input
@@ -192,7 +180,7 @@ export default function Directory() {
           </div>
         </div>
 
-        {/* ── 12 Filter Buttons ──────────────────────────── */}
+        {/* 12 Filter Buttons */}
         <div className="flex flex-wrap gap-2 mb-8">
           {FILTER_BUTTONS.map(({ label, icon: Icon }) => {
             const isActive = activeFilter === label;
@@ -203,10 +191,9 @@ export default function Directory() {
                 className={`
                   flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold
                   border transition-all duration-200 cursor-pointer select-none
-                  ${
-                    isActive
-                      ? "bg-[#1E5631] text-white border-[#1E5631] shadow-md shadow-green-900/20 scale-[1.03]"
-                      : "bg-white text-[#2B2D42] border-gray-200 hover:border-[#1E5631] hover:text-[#1E5631] hover:shadow-sm"
+                  ${isActive
+                    ? "bg-[#1E5631] text-white border-[#1E5631] shadow-md shadow-green-900/20 scale-[1.03]"
+                    : "bg-white text-[#2B2D42] border-gray-200 hover:border-[#1E5631] hover:text-[#1E5631] hover:shadow-sm"
                   }
                 `}
               >
@@ -215,8 +202,6 @@ export default function Directory() {
               </button>
             );
           })}
-
-          {/* Clear filter */}
           {(activeFilter || search) && (
             <button
               onClick={() => { setActiveFilter(null); setSearch(""); }}
@@ -231,18 +216,15 @@ export default function Directory() {
         <p className="text-xs text-gray-400 font-medium mb-5">
           {filtered.length} locatario{filtered.length !== 1 ? "s" : ""} encontrado{filtered.length !== 1 ? "s" : ""}
           {activeFilter && (
-            <span>
-              {" "}en{" "}
-              <span className="text-[#1E5631] font-semibold">{activeFilter}</span>
-            </span>
+            <span> en <span className="text-[#1E5631] font-semibold">{activeFilter}</span></span>
           )}
         </p>
 
-        {/* ── Merchant Grid ──────────────────────────────── */}
+        {/* Merchant Grid */}
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map((loc) => (
-              <LocatarioCard key={loc.id} loc={loc} />
+              <LocatarioCard key={loc._id} loc={loc} />
             ))}
           </div>
         ) : (
