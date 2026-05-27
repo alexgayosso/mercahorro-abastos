@@ -89,73 +89,94 @@ export default function MainNav() {
         )}
       </header>
 
-      {/* ── Hero Section ──────────────────────────────── */}
-      <section className="relative bg-[#1E5631] overflow-hidden">
-        {/* Background pattern */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px), repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)",
-          }}
-        />
-        {/* Diagonal accent */}
-        <div className="absolute -right-20 -top-20 w-96 h-96 bg-[#FF6B35]/20 rounded-full blur-3xl" />
-        <div className="absolute -left-10 bottom-0 w-64 h-64 bg-white/5 rounded-full blur-2xl" />
+      {/* ── Hero Section — Full Bleed Cinematográfico ─ */}
+      <section className="relative overflow-hidden min-h-[92vh] flex items-end pb-0">
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-          <div className="max-w-3xl">
+        {/* ── CAPA 1: Imagen de fondo full-bleed ──────── */}
+        <Image
+          src="/hero-obra.jpg"
+          alt="Mercahorro — infraestructura de abasto moderno"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+
+        {/* ── CAPA 2: Overlay degradado — verde a transparente ── */}
+        {/* Cubre de izquierda hacia el centro-derecha, dejando el atardecer visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0d2e1a]/95 via-[#1E5631]/75 to-[#1a4a28]/20" />
+        {/* Franja oscura en la parte inferior para anclar el contenido */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0d2e1a]/80 to-transparent" />
+        {/* Franja oscura en el top muy sutil */}
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/30 to-transparent" />
+
+        {/* ── CAPA 3: Contenido ───────────────────────── */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 pb-16 md:pb-20">
+          <div className="max-w-2xl">
+
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/85 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 bg-[#FF6B35] rounded-full animate-pulse" />
               Infraestructura Comercial · Norte de México
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tight mb-4">
+            {/* Headline — GRANDE */}
+            <h1 className="text-6xl sm:text-7xl md:text-8xl font-black text-white leading-[0.92] tracking-tight mb-6">
               La Nueva Era
               <br />
               <span className="text-[#FF6B35]">del Abasto.</span>
             </h1>
-            <p className="text-white/70 text-lg md:text-xl font-normal mb-8 max-w-xl leading-relaxed">
+
+            <p className="text-white/75 text-xl font-normal mb-10 max-w-lg leading-relaxed">
               Precios directos del productor.{" "}
-              <span className="text-white font-semibold">Infraestructura de primer mundo.</span>{" "}
+              <span className="text-white font-bold">Infraestructura de primer mundo.</span>{" "}
               300+ comerciantes en 5 mercados modernos.
             </p>
 
-            {/* Hero CTAs */}
-            <div className="flex flex-wrap gap-3">
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4 mb-14">
               <a
                 href="#directorio"
-                className="bg-[#FF6B35] hover:bg-[#e55c27] text-white font-bold px-7 py-3.5 rounded-xl text-sm tracking-wide transition-all hover:scale-105 shadow-lg shadow-orange-900/30"
+                className="bg-[#FF6B35] hover:bg-[#e55c27] text-white font-black px-8 py-4 rounded-xl text-base tracking-wide transition-all hover:scale-105 shadow-2xl shadow-black/40"
               >
                 Quiero Comprar
               </a>
               <a
                 href="#cotiza"
-                className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-7 py-3.5 rounded-xl text-sm tracking-wide transition-all hover:scale-105 backdrop-blur-sm"
+                className="bg-white/10 hover:bg-white/20 border border-white/40 text-white font-black px-8 py-4 rounded-xl text-base tracking-wide transition-all hover:scale-105 backdrop-blur-sm"
               >
                 Quiero Vender Aquí
               </a>
             </div>
 
-            {/* Stats strip */}
-            <div className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/10">
+            {/* Stats strip — inline con separadores */}
+            <div className="flex flex-wrap items-center gap-0 pt-8 border-t border-white/15">
               {[
                 { value: "52,000+", label: "m² desarrollados" },
                 { value: "300+", label: "Comerciantes activos" },
-                { value: "5", label: "Mercados modernos" },
-                { value: "+70%", label: "Incremento de ventas promedio" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-2xl font-black text-white">{stat.value}</div>
-                  <div className="text-white/50 text-xs mt-0.5">{stat.label}</div>
+                { value: "5", label: "Mercados" },
+                { value: "+70%", label: "Más ventas" },
+              ].map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className={`pr-8 ${i > 0 ? "pl-8 border-l border-white/15" : ""} py-1`}
+                >
+                  <div className="text-3xl font-black text-white leading-none">{stat.value}</div>
+                  <div className="text-white/40 text-xs mt-1 uppercase tracking-widest font-semibold">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* ── Scroll cue ──────────────────────────────── */}
+        <div className="absolute bottom-8 right-10 z-10 hidden md:flex items-center gap-2 text-white/30 text-xs font-semibold tracking-widest uppercase">
+          <span>Descubre el directorio</span>
+          <div className="w-px h-8 bg-white/20" />
+        </div>
+
       </section>
     </>
   );
 }
+
