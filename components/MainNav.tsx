@@ -47,7 +47,7 @@ export default function MainNav() {
               Sucursales
             </button>
             <a
-              href="https://wa.me/528120008031"
+              href="https://wa.me/528120008031?text=Hola%20👋%20Me%20gustaría%20obtener%20información%20sobre%20Mercahorro%20Abastos."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors"

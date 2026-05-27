@@ -54,7 +54,7 @@ export default function B2BSection() {
               al mudarse a Mercahorro. Tu local es un activo que se valoriza.
             </p>
             <a
-              href="https://wa.me/528120008031?text=Hola, quiero cotizar un local en Mercahorro"
+              href="https://wa.me/528120008031?text=Hola%2C%20estoy%20interesado%20en%20cotizar%20un%20local%20en%20Mercahorro.%20¿Me%20pueden%20dar%20información%20sobre%20disponibilidad%20y%20precios%3F"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#FF6B35] hover:bg-[#e55c27] text-white font-black text-base px-8 py-4 rounded-xl transition-all hover:scale-105 shadow-xl shadow-orange-900/30"
