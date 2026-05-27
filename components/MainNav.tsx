@@ -3,19 +3,56 @@
 // ============================================================
 "use client";
 
-import { useState } from "react";
-import { Search, MapPin, Phone, Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Search, MapPin, Phone, Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
+
+interface Mercado {
+  _id: string;
+  name: string;
+  city: string;
+  address?: string;
+  coordinates?: string;
+  googleMapsUrl?: string;
+}
+
+function getMapsUrl(mercado: Mercado): string {
+  if (mercado.googleMapsUrl) return mercado.googleMapsUrl;
+  if (mercado.coordinates) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mercado.coordinates)}`;
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${mercado.name} ${mercado.city} Mexico`)}`;
+}
 
 export default function MainNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [sucursalesOpen, setSucursalesOpen] = useState(false);
+  const [mercados, setMercados] = useState<Mercado[]>([]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Fetch mercados desde Sanity al cargar
+  useEffect(() => {
+    fetch("/api/mercados")
+      .then((r) => r.json())
+      .then((data) => setMercados(data))
+      .catch(() => {});
+  }, []);
+
+  // Cierra dropdown al click fuera
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setSucursalesOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   function handleSearch(value: string) {
     setQuery(value);
-    // Dispara evento global que Directory.tsx escucha
     window.dispatchEvent(new CustomEvent("mercahorro:search", { detail: value }));
-    // Scroll suave al directorio
     if (value.length > 0) {
       const dir = document.getElementById("directorio");
       if (dir) dir.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -64,10 +101,47 @@ export default function MainNav() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors">
-              <MapPin size={15} />
-              Sucursales
-            </button>
+            {/* Sucursales dropdown dinámico */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setSucursalesOpen(!sucursalesOpen)}
+                className="flex items-center gap-1.5 text-sm font-semibold text-[#2B2D42] hover:text-[#1E5631] transition-colors"
+              >
+                <MapPin size={15} />
+                Sucursales
+                <ChevronDown size={13} className={`transition-transform ${sucursalesOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {sucursalesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50">
+                  {mercados.length === 0 ? (
+                    <p className="text-xs text-gray-400 px-4 py-3">Cargando sucursales…</p>
+                  ) : (
+                    mercados.map((m) => (
+                      <a
+                        key={m._id}
+                        href={getMapsUrl(m)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setSucursalesOpen(false)}
+                        className="flex items-start gap-3 px-4 py-3 hover:bg-[#F4F5F7] transition-colors group"
+                      >
+                        <MapPin size={15} className="text-[#FF6B35] mt-0.5 shrink-0" />
+                        <div>
+                          <div className="font-bold text-sm text-[#2B2D42] group-hover:text-[#1E5631] transition-colors">
+                            {m.name}
+                          </div>
+                          <div className="text-xs text-gray-400 mt-0.5">{m.city}</div>
+                          {m.address && (
+                            <div className="text-xs text-gray-400 mt-0.5 line-clamp-1">{m.address}</div>
+                          )}
+                        </div>
+                      </a>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
             <a
               href="https://wa.me/528120008031?text=Hola%20👋%20Me%20gustaría%20obtener%20información%20sobre%20Mercahorro%20Abastos."
               target="_blank"

@@ -52,6 +52,18 @@ export default defineType({
       type: "image",
       options: { hotspot: true },
     }),
+    defineField({
+      name: "coordinates",
+      title: "Coordenadas Google Maps",
+      description: "Pega aquí las coordenadas. En Google Maps: click derecho sobre el local → copia las coordenadas. Ej: 25.5432,-103.4678",
+      type: "string",
+    }),
+    defineField({
+      name: "googleMapsUrl",
+      title: "Link directo de Google Maps (opcional)",
+      description: "Si tienes el link compartido de Google Maps pégalo aquí. Si no, con las coordenadas es suficiente.",
+      type: "url",
+    }),
   ],
   preview: {
     select: { title: "name", subtitle: "city" },

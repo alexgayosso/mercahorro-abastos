@@ -56,6 +56,8 @@ export async function getMercados() {
       totalLocals,
       sqm,
       openYear,
+      coordinates,
+      googleMapsUrl,
       "heroImageUrl": heroImage.asset->url
     }`
   );
