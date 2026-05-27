@@ -6,7 +6,7 @@ import { client } from "./sanity.client";
 // ─── LOCATARIOS ──────────────────────────────────────────────
 export async function getLocatarios() {
   return client.fetch(
-    `*[_type == "locatario" && active == true] | order(featured desc, localNumber asc) {
+    `*[_type == "locatario" && active == true && !(_id in path("drafts.**"))] | order(featured desc, localNumber asc) {
       _id,
       localNumber,
       businessName,
@@ -64,7 +64,7 @@ export async function getMercados() {
 // ─── EVENTOS ─────────────────────────────────────────────────
 export async function getEventos() {
   return client.fetch(
-    `*[_type == "evento"] | order(date asc) {
+    `*[_type == "evento" && !(_id in path("drafts.**"))] | order(date asc) {
       _id,
       title,
       date,
@@ -79,7 +79,7 @@ export async function getEventos() {
 // ─── RECETAS ─────────────────────────────────────────────────
 export async function getRecetas() {
   return client.fetch(
-    `*[_type == "receta"] | order(_createdAt desc) {
+    `*[_type == "receta" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
       _id,
       title,
       slug,
