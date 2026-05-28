@@ -37,9 +37,10 @@ async function getReceta(slug: string) {
 export default async function RecetaPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const receta = await getReceta(params.slug);
+  const { slug } = await params;
+  const receta = await getReceta(slug);
 
   if (!receta) notFound();
 
